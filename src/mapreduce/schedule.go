@@ -30,5 +30,19 @@ func schedule(jobName string, mapFiles []string, nReduce int, phase jobPhase, re
 	//
 	// Your code here (Part III, Part IV).
 	//
+
+	args := DoTaskArgs{
+		JobName:       "",
+		File:          "",
+		Phase:         "",
+		TaskNumber:    0,
+		NumOtherPhase: 0,
+	}
+	select {
+	case srv := <-registerChan:
+		call(srv, "Worker.DoTask", args, nil)
+
+	}
+
 	fmt.Printf("Schedule: %v done\n", phase)
 }
